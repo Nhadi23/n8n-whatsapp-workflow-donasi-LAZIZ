@@ -52,16 +52,42 @@ Cocok untuk:
 
 ---
 
-## 🔌 Setup WAHA
+## 🧩 Gambaran Singkat Workflow
 
-### 1️⃣ Jalankan WAHA (Docker)
+Workflow ini berfungsi sebagai **WhatsApp AI Bot** dengan kemampuan:
 
-```bash
-docker run -d \
-  --name waha \
-  -p 3000:3000 \
-  -e WHATSAPP_DEFAULT_ENGINE=WEBJS \
-  -e WHATSAPP_API_KEY=your_api_key \
-  devlikeapro/waha
-Webhook URL:
-https://your-n8n-domain/webhook/waha
+- Menerima pesan WhatsApp (Text / Image / Audio)
+- Menampilkan status *seen* dan *typing*
+- Menganalisis pesan menggunakan AI Agent
+- Transkripsi audio
+- Analisis gambar
+- Menyimpan log ke Google Sheets
+- Mengirim balasan otomatis ke WhatsApp
+
+---
+
+## 🛠️ Persiapan Sebelum Import
+
+Pastikan kamu sudah memiliki:
+
+### 1️⃣ n8n (Wajib)
+- Self-hosted (VPS / Docker / Coolify), atau
+- n8n Cloud
+
+### 2️⃣ WAHA (Wajib)
+Digunakan sebagai WhatsApp Gateway
+
+### 3️⃣ Akun Google (Opsional)
+Untuk logging ke Google Sheets
+
+### 4️⃣ API Key AI (Wajib)
+Contoh:
+- Google Gemini
+- OpenAI
+- LLM lain yang didukung n8n
+
+### 5️⃣ Masukan Workflow
+- buat workflow baru atau yang sudah lama
+- copy paste dari code workflow.json dari github
+- paste ke workflow anda
+---
