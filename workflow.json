@@ -1,0 +1,1052 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        912,
+        208
+      ],
+      "id": "bcd70f14-6cf4-4831-839f-d4f420181583",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "amount": "={{ $('WAHA Trigger').item.json.payload.body.length/5}}"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1168,
+        208
+      ],
+      "id": "fa33a228-b15c-4207-bfe9-d67ebe45c014",
+      "name": "Wait",
+      "webhookId": "c99c1bd3-6c57-42ba-9ec4-7a462477e011"
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Start Typing",
+        "session": "={{ $('Edit Fields').item.json.session }}",
+        "chatId": "={{ $('Edit Fields').item.json.payload.from }}",
+        "requestOptions": {}
+      },
+      "type": "@devlikeapro/n8n-nodes-waha.WAHA",
+      "typeVersion": 202502,
+      "position": [
+        1888,
+        16
+      ],
+      "id": "ade0ab8f-ee63-4df9-a364-8f19d573127f",
+      "name": "Start Typing",
+      "credentials": {
+        "wahaApi": {
+          "id": "K675sLlUnJedWsVe",
+          "name": "WAHA account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Send Seen",
+        "requestOptions": {}
+      },
+      "type": "@devlikeapro/n8n-nodes-waha.WAHA",
+      "typeVersion": 202502,
+      "position": [
+        1040,
+        208
+      ],
+      "id": "272cd915-0150-40c8-a64c-2129376fb98b",
+      "name": "Send Seen",
+      "credentials": {
+        "wahaApi": {
+          "id": "K675sLlUnJedWsVe",
+          "name": "WAHA account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('Edit Fields').item.json.payload.body }}",
+        "options": {
+          "systemMessage": "=Your name is Al-Barkah, an intelligent customer service assistant for LazisWaf, sebuah lembaga yang menerima dan menyalurkan sedekah, zakat, dan wakaf secara amanah\ntanggal hari ini : {{ $json.timestamp_wib }}\nTujuan Utama\nMenerima donasi dan memberikan informasi seputar Laziswaf\n\nJika pengguna menanyakan cara donasi, pembayaran, atau transfer, berikan informasi rekening berikut sesuai dengngan kebuatuhan pengguna:\n\nSedekah:\nBank Syariah Indonesia (BSI)\nNo Rekening: 1010632279\nAtas Nama: Laziswaf Unida Gontor\n\nZakat :\nBank Syariah Indonesia (BSI)\nNo Rekening: 7035771993\nAtas Nama: Laziswaf Unida Gontor\n\nWakaf :\nBank Muamalat\nNo Rekening: 7430003753\nAtas Nama:Laziswaf Unida Gontor\n\nSelalu sampaikan dengan format rapi dan sopan serta islami.\ntidak perlu menggunakan menebalkan kalimat *seprti ini*\nSelalu mengapresiasi niat baik donatur\n\nCatatan Penting :\nJika Pengguna Sudah Melakukan Donasi Maka Lakukan Tugas Berikut\n\nMenawarkan kepada donatur untuk:\nMengirimkan doa titipan\nUntuk keluarga / kerabat yang sedang sakit\nAtau keluarga / kerabat yang telah wafat\nMenginformasikan bahwa doa akan dibacakan dan didoakan di:\nMasjid Universitas Darussalam (UNIDA) Gontor\n\nMengumpulkan data doa hanya jika pengguna menyetujui.\nMengirim dan menyimpan data doa ke Spreadsheet (Google Sheets / Spreadsheet n8n) secara rapi dan konsisten.\n\nInformasi Lokasi Doa\nAlur Percakapan Wajib\n1️Ucapan Terima Kasih\n\nPenawaran Doa\n\ntawarkan doa titipan dengan jelas seperti:\n\n“Sebagai bentuk khidmah kami, kami ingin menawarkan apabila Bapak/Ibu berkenan menitipkan doa untuk keluarga atau kerabat—baik yang sedang sakit maupun yang telah meninggal—untuk kami doakan di Masjid UNIDA Gontor.”\n\n3️Konfirmasi Kesediaan\nika Pengguna Menjawab YA maka :\nMinta data secara bertahap dan jelas\nData yang Wajib Dikumpulkan\nNama yang akan didoakan\nStatus doa (pilih salah satu):\nSakit atau Telah meninggal\nHubungan dengan donatur (opsional, contoh: ayah, ibu, saudara, teman)\nIsi doa singkat (opsional, jika ingin dituliskan)\nGunakan format pertanyaan yang lembut, contoh:\n“Baik, mohon dituliskan nama orang yang ingin didoakan.”\n\n6️⃣ Validasi Data\nContoh :\n“Baik Pak, doa untuk Ibu Sri, ibu dari Saudara Ahmad (sakit), konfirmasi jika benar.”\nsetelah di konfirmasi beritahu\nuntuk tanggal untuk mendoakan periksa tanggal hari ini, lalu cek tanggal berapa jumat depan lalu konfirmasi seperti berikut :\n“Baik Pak, doa untuk Ibu Sri ibu dari Saudara Ahmad (sakit),  doa telah kami catat dan akan didoakan di Masjid UNIDA Gontor, yang inshallah akan di laksanakan pada tanggal 26 Desember 2025, selepas salat Jumat.🙏”\n\njangan lupa masukan data doa ke sheets : List_Doa_Donatur_Lazizwaf\n\n\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        2544,
+        0
+      ],
+      "id": "e26dd94b-3784-4413-bc8c-9007ad86dd84",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Stop Typing",
+        "session": "={{ $('Edit Fields').item.json.session }}",
+        "chatId": "={{ $('Edit Fields').item.json.payload.from }}",
+        "requestOptions": {}
+      },
+      "type": "@devlikeapro/n8n-nodes-waha.WAHA",
+      "typeVersion": 202502,
+      "position": [
+        2992,
+        0
+      ],
+      "id": "c69c7680-8456-4dd0-bc80-3a3ec6b15709",
+      "name": "Stop Typing",
+      "credentials": {
+        "wahaApi": {
+          "id": "K675sLlUnJedWsVe",
+          "name": "WAHA account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Send Text",
+        "session": "={{ $('Edit Fields').item.json.session }}",
+        "chatId": "={{ $('Edit Fields').item.json.payload.from }}",
+        "text": "={{ $('AI Agent').item.json.output }}",
+        "requestOptions": {}
+      },
+      "type": "@devlikeapro/n8n-nodes-waha.WAHA",
+      "typeVersion": 202502,
+      "position": [
+        3152,
+        0
+      ],
+      "id": "313fe3eb-f87a-458a-8ea5-885d7cbd7e5e",
+      "name": "Send a text message",
+      "credentials": {
+        "wahaApi": {
+          "id": "K675sLlUnJedWsVe",
+          "name": "WAHA account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Edit Fields').item.json.payload.from }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        2816,
+        368
+      ],
+      "id": "61144e54-aa07-4e38-bceb-c3fe84888336",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "name": "={{ $('Edit Fields').item.json.payload.id }}{{ $('Edit Fields').item.json.payload.timestamp }}",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1sKH4wlKN21i3YjCBLf4gpoI2Ut0QiO67",
+          "mode": "list",
+          "cachedResultName": "Bukti Pembayaran Lazizwaf",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1sKH4wlKN21i3YjCBLf4gpoI2Ut0QiO67"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        2032,
+        336
+      ],
+      "id": "93f2ec81-13d8-41ed-b46f-ee0d6287bed2",
+      "name": "Upload file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "wcFGWPzvnzYJpqti",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "d7a058cd-707a-4955-b114-d26003b44e29",
+                    "leftValue": "={{ $('Edit Fields').item.json.payload._data.type }}",
+                    "rightValue": "chat",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "text"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "bc53b30e-7ada-448d-a020-5cdca2a849e0",
+                    "leftValue": "={{ $('WAHA Trigger').item.json.payload.media.mimetype }}",
+                    "rightValue": "image/jpeg",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Image"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "03b2412c-df0d-45d8-8c52-4f7b8ad3c37e",
+                    "leftValue": "={{ $('Edit Fields').item.json.payload.media.mimetype }}",
+                    "rightValue": "audio/ogg; codecs=opus",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "audio"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": 0,
+          "ignoreCase": false
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.3,
+      "position": [
+        1312,
+        192
+      ],
+      "id": "04270aa5-348c-4fef-84ea-e392d29cb8d5",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "url": "=https://waha.nexawebs.com/api/files/default/{{ $('Edit Fields').item.json.payload.id }}.jpeg",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "wahaApi",
+        "options": {
+          "response": {
+            "response": {}
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        1776,
+        208
+      ],
+      "id": "188e6a3b-046b-4252-9a83-d9768ecaf13d",
+      "name": "HTTP Request",
+      "credentials": {
+        "wahaApi": {
+          "id": "K675sLlUnJedWsVe",
+          "name": "WAHA account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "=https://waha.nexawebs.com/api/files/default/{{ $('Edit Fields').item.json.payload.media }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "wahaApi",
+        "options": {
+          "response": {
+            "response": {}
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        1776,
+        384
+      ],
+      "id": "ed60bc32-fb52-4df8-a0d8-5bb50da760ec",
+      "name": "HTTP Request1",
+      "credentials": {
+        "wahaApi": {
+          "id": "K675sLlUnJedWsVe",
+          "name": "WAHA account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@devlikeapro/n8n-nodes-waha.wahaTrigger",
+      "typeVersion": 202502,
+      "position": [
+        624,
+        -160
+      ],
+      "id": "4271b536-d6db-4841-8e12-8150c837b6ae",
+      "name": "WAHA Trigger",
+      "webhookId": "15ec3ecc-6d0e-4db3-b5e4-38bb6fd0907f",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "operation": "analyze",
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-2.5-flash",
+          "mode": "list",
+          "cachedResultName": "models/gemini-2.5-flash"
+        },
+        "text": "=Bisakah kamu mengekstrak informasi berikut dari struk transfer?\n\n```json\n{\n  \"Tipe_Transaksi\": \"\",          (misalnya “m-Transfer”)\n  \"Status\": \"\",                  (misalnya “Berhasil”)\n  \"Tanggal\": \"\",                 (misalnya “07/02/2025”)\n  \"Waktu\": \"\",                   (misalnya “11:15:44”)\n  \"No_REF\": \"\",                  (misalnya “378901234432124134”)\n  \"Nama_Pengirim\": \"\",           (misalnya “AHMAD NUGRA”)\n  \"No_Rekening_Pengirim\": \"\",    (misalnya “12345123”)\n  \"Nama_Penerima\": \"\",           (misalnya “ANDHIKA PUTRA”)\n  \"Bank_or_Product_Tujuan\": \"\",  (misalnya “BLU by BCA DIGITAL”)\n  \"No_Rekening_Tujuan\": \"\",      (misalnya “12345123”)\n  \"Nominal_Transfer\": \"\",        (misalnya “Rp 50.000,00”)\n  \"Biaya\": \"\",                   (misalnya “Rp 2.500,00”)\n  \"Layanan\": \"\",                 (misalnya “BI FAST”)\n  \"Berita\": \"\",                  (misalnya “Arisan”)\n  \"Tujuan_Transaksi\": \"\"         (misalnya “Investasi”)\n}\nKembalikan jawabanmu hanya dalam format JSON sesuai template di atas, tanpa teks lain.```\n",
+        "inputType": "binary",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1,
+      "position": [
+        2032,
+        176
+      ],
+      "id": "933e7ce2-8d87-4c0a-a647-3ef053e24e82",
+      "name": "Analyze an image",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "94fSSOUOGgxvHbfU",
+          "name": "Google Gemini(PaLM) Api account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nconst parsedItems = items.map((item) => {\n  let content = $input.first().json.content.parts[0].text;\n  content = content.replace(\"```json\", \"\").replace(\"```\", \"\");\n  const parsedContent = JSON.parse(content);\n  return parsedContent;\n});\nreturn parsedItems[0];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2272,
+        352
+      ],
+      "id": "72abb00d-621c-4264-815e-d0641658dde5",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1qNn8Er2on2wWVYTPU0CYVMUbgsu9Rws7MsmLLv430ow",
+          "mode": "list",
+          "cachedResultName": "Lazizwaf Infoice",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1qNn8Er2on2wWVYTPU0CYVMUbgsu9Rws7MsmLLv430ow/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1qNn8Er2on2wWVYTPU0CYVMUbgsu9Rws7MsmLLv430ow/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Tipe_Transaksi",
+              "displayName": "Tipe_Transaksi",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Tanggal",
+              "displayName": "Tanggal",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Waktu",
+              "displayName": "Waktu",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "No_REF",
+              "displayName": "No_REF",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Nama_Penerima",
+              "displayName": "Nama_Penerima",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Bank_or_Product_Tujuan",
+              "displayName": "Bank_or_Product_Tujuan",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "No_Rekening_Tujuan",
+              "displayName": "No_Rekening_Tujuan",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Nominal_Transfer",
+              "displayName": "Nominal_Transfer",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Biaya",
+              "displayName": "Biaya",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Layanan",
+              "displayName": "Layanan",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Berita",
+              "displayName": "Berita",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Tujuan_Transaksi",
+              "displayName": "Tujuan_Transaksi",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2448,
+        352
+      ],
+      "id": "c90f3d9f-c328-4f0b-bd83-9c32c3fe5b35",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "qM48eivKoCdbI2wM",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are LazizWaf AI – Post Donation Agent, sebuah AI agent lanjutan yang bertugas SETELAH donasi berhasil dilakukan melalui invoice.\n\nWe just analysed an invoice and got following response:\n{{ $('Code in JavaScript').item.json}}|\nferifikasi apakah invoice sudah sesuai, lalu melaksanakan beberapa point berikut :\n\nMengucapkan terima kasih atas donasi yang telah dilakukan.\n\nMenawarkan kepada donatur untuk:\n\nMengirimkan doa titipan\n\nUntuk keluarga / kerabat yang sedang sakit\n\nAtau keluarga / kerabat yang telah wafat\n\nMenginformasikan bahwa doa akan dibacakan dan didoakan di:\nMasjid Universitas Darussalam (UNIDA) Gontor\n\n💬 Gaya Bahasa & Nada\nsopan\nIslami (ringan, tidak ekstrem)\n",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        2800,
+        160
+      ],
+      "id": "c5114049-cff4-4e7a-bba8-8f14e36cde64",
+      "name": "AI Agent1"
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Send Text",
+        "session": "={{ $('Edit Fields').item.json.session }}",
+        "chatId": "={{ $('Edit Fields').item.json.payload.from }}",
+        "text": "={{ $json.output }}",
+        "requestOptions": {}
+      },
+      "type": "@devlikeapro/n8n-nodes-waha.WAHA",
+      "typeVersion": 202502,
+      "position": [
+        3120,
+        224
+      ],
+      "id": "069ec1a6-ea05-4c3a-a231-efb2f4d88e51",
+      "name": "Send a text message1",
+      "credentials": {
+        "wahaApi": {
+          "id": "K675sLlUnJedWsVe",
+          "name": "WAHA account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        2656,
+        368
+      ],
+      "id": "a51bf489-f05e-4fc2-9518-537dc8eeec22",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "Mz4qCpn0p7ep7yGD",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0503ccec-ab13-4777-8107-3dad70c8799e",
+              "name": "timestamp_wib",
+              "value": "={{ new Intl.DateTimeFormat('id-ID', { timeZone: 'Asia/Jakarta', weekday: 'long', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false }).format(new Date($('Edit Fields').item.json.timestamp)) }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2032,
+        0
+      ],
+      "id": "a9583ccb-ce3a-4f15-b43b-236054fb3890",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1pkuPPGbz7VhAKqT3LrnuM8fHX3r2nk3J_0-zlb7eryg",
+          "mode": "list",
+          "cachedResultName": "List_Doa_Donatur_Lazizwaf",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1pkuPPGbz7VhAKqT3LrnuM8fHX3r2nk3J_0-zlb7eryg/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1pkuPPGbz7VhAKqT3LrnuM8fHX3r2nk3J_0-zlb7eryg/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "timestamp_wib",
+              "displayName": "timestamp_wib",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "toolCallId",
+              "displayName": "toolCallId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        2272,
+        176
+      ],
+      "id": "49d87d6a-102e-4432-a75e-e2c7addcb841",
+      "name": "Append row in sheet in Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "qM48eivKoCdbI2wM",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "description": "jika ada yang menitipka doa, pastikan untuk memasukanya ke spreadsheet."
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolThink",
+      "typeVersion": 1.1,
+      "position": [
+        2416,
+        192
+      ],
+      "id": "ccedce15-243b-40ad-b9fc-ccc349cffcbf",
+      "name": "Think"
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "operation": "transcribe",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.1,
+      "position": [
+        2048,
+        528
+      ],
+      "id": "88b624ce-5cc1-45a4-b72d-e66bc0d9bc02",
+      "name": "Transcribe a recording",
+      "credentials": {
+        "openAiApi": {
+          "id": "hejCn2KxCk2OlXjj",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {},
+            {}
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        1632,
+        32
+      ],
+      "id": "c2eec982-f4a9-43b7-970c-9e884a7ddf0b",
+      "name": "Aggregate"
+    }
+  ],
+  "connections": {
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Send Seen",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Start Typing": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Seen": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Stop Typing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stop Typing": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_memory",
+            "index": 0
+          },
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload file": {
+      "main": [
+        []
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Upload file",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Analyze an image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Transcribe a recording",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WAHA Trigger": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        []
+      ]
+    },
+    "Analyze an image": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent1": {
+      "main": [
+        [
+          {
+            "node": "Send a text message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "AI Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet in Google Sheets": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Think": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transcribe a recording": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "Start Typing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "b6e3f1472f7582e09477e2a0cd85efebe795981fcc4b61595d14b2d7ba238255"
+  }
+}
